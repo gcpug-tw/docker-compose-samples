@@ -76,8 +76,30 @@ Run the compose file to group start mesos server and marathon server.
 docker-compose -f mesos-marathon-swarm.yml up -d
 ```
 
+## Services that you can connect
 
+* Mesos: http://your-ip-address:5050
+* Marathon: http://your-ip-address:8080
 
+The ip address and port can see from:
 
+```
+eval $(docker-machine env --swarm mhs-demo0)
+docker ps
+```
+
+## Note
+
+If you using the compose version is newer than 1.4 (ex: 1.5), it may need to add "--google-machine-image" in compose command. In this example, we use ubuntu 14.04 for base image, if the newer compose will use ubuntu 15.x, and will have some problem when provision.
+
+ex: 
+
+```
+docker-machine create --driver google \
+  --google-project $PROJECT_ID \
+  --google-zone asia-east1-c \
+  --google-machine-image https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-1404-trusty-v20160314 \
+  --google-machine-type f1-micro mh-keystore
+``` 
 
 
