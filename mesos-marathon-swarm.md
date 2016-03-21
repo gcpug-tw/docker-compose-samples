@@ -88,6 +88,30 @@ eval $(docker-machine env --swarm mhs-demo0)
 docker ps
 ```
 
+## Scale out service
+
+### Scale out machine
+
+```
+docker-machine create \
+--driver google \
+--google-project $PROJECT_ID \
+--google-zone asia-east1-c \
+--google-machine-type n1-standard-1 \
+--swarm \
+--swarm-discovery="consul://$(docker-machine ip mh-keystore):8500" \
+--engine-opt="cluster-store=consul://$(docker-machine ip mh-keystore):8500" \
+--engine-opt="cluster-advertise=eth0:2376" \
+mhs-demoX
+```
+
+### Scale out mesos slave
+
+```
+# docker-compose -f mesos-marathon-swarm.yml scale mesosslave=10
+```
+
+
 ## Note
 
 If you using the compose version is newer than 1.4 (ex: 1.5), it may need to add "--google-machine-image" in compose command. In this example, we use ubuntu 14.04 for base image, if the newer compose will use ubuntu 15.x, and will have some problem when provision.
